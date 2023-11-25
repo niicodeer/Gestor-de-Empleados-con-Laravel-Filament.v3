@@ -26,7 +26,7 @@ class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
     public static function form(Form $form): Form
     {
@@ -37,6 +37,7 @@ class EmployeeResource extends Resource
                 Select::make('country_id')
                 ->label('Pais')
                 ->options(Country::all()->pluck('name', 'id')->toArray())
+                ->required()
                 ->reactive()
                 ->afterStateUpdated(fn(callable $set)=> $set('state_id', null)),
                 Select::make('state_id')
@@ -69,16 +70,20 @@ class EmployeeResource extends Resource
                 ->required(),
                 TextInput::make('first_name')
                 ->label('Nombre')
-                ->required(),
+                ->required()
+                ->maxLength(255),
                 TextInput::make('last_name')
                 ->label('Apellido')
-                ->required(),
+                ->required()
+                ->maxLength(255),
                 TextInput::make('address')
                 ->label('Direccion')
-                ->required(),
+                ->required()
+                ->maxLength(255),
                 TextInput::make('zip_code')
                 ->label('Codigo Postal')
-                ->required(),
+                ->required()
+                ->maxLength(5),
                 DatePicker::make('birth_date')
                 ->label('Fecha Nacimiento')
                 ->required(),
